@@ -5,14 +5,14 @@ Player.h = TILESIZE
 
 Player.speed = 250
 
-function Player:initialize(level, input, x, y)
-    self.level = level
+function Player:initialize(game, input, x, y)
+    self.game = game
     self.input = input
 
     self.x = x
     self.y = y
 
-    self.level.world:add(self, self.x, self.y, self.w, self.h)
+    self.game.world:add(self, self.x, self.y, self.w, self.h)
 end
 
 function Player:update(dt)
@@ -25,11 +25,11 @@ function Player:update(dt)
     else
         local x, y = controls:get("movement")
 
-        goalX = x*TILESIZE*8-self.w + TILESIZE*8
-        goalY = y*TILESIZE*8-self.h + TILESIZE*8
+        goalX = x*(TILESIZE*16-self.w)*.5 + TILESIZE*9-self.w*.5
+        goalY = y*(TILESIZE*16-self.h)*.5 + TILESIZE*9-self.h*.5
     end
 
-    local actualX, actualY, cols, len = self.level.world:move(self, goalX, goalY)
+    local actualX, actualY, cols, len = self.game.world:move(self, goalX, goalY)
 
     self.x = actualX
     self.y = actualY

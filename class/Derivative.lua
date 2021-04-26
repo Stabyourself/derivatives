@@ -17,6 +17,12 @@ function Derivative:update(dt)
 
     self.x = math.max(-1, math.min(1, self.x))
     self.y = math.max(-1, math.min(1, self.y))
+
+    -- limit to 1
+    local len = math.sqrt(self.x*self.x + self.y*self.y)
+    if len > 1 then
+        self.x, self.y = self.x / len, self.y / len
+    end
 end
 
 function Derivative:getPosition()

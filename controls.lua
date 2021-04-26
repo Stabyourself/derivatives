@@ -8,5 +8,6 @@ return {
     pairs = {
         movement = {'left', 'right', 'up', 'down'},
     },
-    joystick = love.joystick.getJoysticks()[1]
+    joystick = love.joystick.getJoysticks()[1],
+    deadzone = 0.3,
 }

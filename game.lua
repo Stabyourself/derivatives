@@ -1,9 +1,11 @@
+local Player = require "class.Player"
+local bump = require "lib.bump"
 local Input = require "class.Input"
 local Derivative = require "class.Derivative"
 local Level = require "class.Level"
 local game = gamestate.new()
 
-local derivativeCount = 6
+local derivativeCount = 3
 
 function game:enter()
     self.nodes = {}
@@ -18,7 +20,11 @@ function game:enter()
         self.nodes[1].name = TERMS[derivativeCount-i+1]
     end
 
+    self.world = bump.newWorld(TILESIZE*2)
+
     self.level = Level:new(self, MAP)
+
+    self.player = Player:new(self, self.nodes[1], #self.level.map[1]/2*TILESIZE-TILESIZE*.5, #self.level.map/2*TILESIZE-TILESIZE*.5)
 end
 
 function game:update(dt)
@@ -26,7 +32,7 @@ function game:update(dt)
         node:update(dt)
     end
 
-    self.level:update(dt)
+    self.player:update(dt)
 end
 
 function game:draw()
@@ -46,7 +52,12 @@ function game:draw()
     love.graphics.push()
     love.graphics.translate(200, 20)
 
+    love.graphics.setColor(COLORS.tiles)
     self.level:draw()
+
+    love.graphics.setColor(COLORS.player)
+    self.player:draw()
+
     love.graphics.setColor(COLORS.text)
     love.graphics.setFont(FONTS.figure)
     love.graphics.printf("Fig. 1: Position", 0, 18*TILESIZE, 18*TILESIZE, "left")
