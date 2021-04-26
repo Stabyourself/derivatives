@@ -1,9 +1,9 @@
 local Player = class("Player")
 
-Player.w = 50
-Player.h = 50
+Player.w = TILESIZE
+Player.h = TILESIZE
 
-Player.speed = 300
+Player.speed = 250
 
 function Player:initialize(level, input, x, y)
     self.level = level
@@ -25,8 +25,8 @@ function Player:update(dt)
     else
         local x, y = controls:get("movement")
 
-        goalX = x*375-self.w/2 + 400
-        goalY = y*375-self.h/2 + 400
+        goalX = x*TILESIZE*8-self.w + TILESIZE*8
+        goalY = y*TILESIZE*8-self.h + TILESIZE*8
     end
 
     local actualX, actualY, cols, len = self.level.world:move(self, goalX, goalY)
@@ -36,7 +36,6 @@ function Player:update(dt)
 end
 
 function Player:draw()
-    love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 end
 

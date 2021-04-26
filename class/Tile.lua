@@ -8,7 +8,6 @@ function Tile:initialize(x, y, w, h)
 end
 
 function Tile:draw()
-    love.graphics.setColor(1, 1, 1)
     love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 end
 

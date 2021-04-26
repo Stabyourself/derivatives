@@ -20,16 +20,16 @@ function Level:initialize(game, mapStrings)
             self.map[x][y] = false
 
             if char == "#" then
-                local cox = (x-2)*50
-                local coy = (y-2)*50
+                local cox = (x-1)*TILESIZE
+                local coy = (y-1)*TILESIZE
 
-                self.map[x][y] = Tile:new(cox, coy, 50, 50)
-                self.world:add(self.map[x][y], cox, coy, 50, 50)
+                self.map[x][y] = Tile:new(cox, coy, TILESIZE, TILESIZE)
+                self.world:add(self.map[x][y], cox, coy, TILESIZE, TILESIZE)
             end
         end
     end
 
-    self.player = Player:new(self, self.game.nodes[1], 375, 375)
+    self.player = Player:new(self, self.game.nodes[1], #self.map[1]/2*TILESIZE-TILESIZE*.5, #self.map/2*TILESIZE-TILESIZE*.5)
 end
 
 function Level:update(dt)
@@ -37,6 +37,7 @@ function Level:update(dt)
 end
 
 function Level:draw()
+    love.graphics.setColor(COLORS.tiles)
     for x = 1, #self.map do
         for y = 1, #self.map[x] do
             if self.map[x][y] then
@@ -45,6 +46,7 @@ function Level:draw()
         end
     end
 
+    love.graphics.setColor(COLORS.player)
     self.player:draw()
 end
 

@@ -9,10 +9,10 @@ function _Node:draw(active, x, y, w, h)
     local mx, my = self:getPosition()
 
     -- background
-    love.graphics.setColor(1, 1, 1, 0.8)
+    love.graphics.setColor(COLORS.derivativeBackground)
     love.graphics.rectangle("fill", x, y, w, h)
 
-    love.graphics.setColor(1, 1, 1)
+    love.graphics.setColor(COLORS.derivativeBorder)
     -- outline
     love.graphics.rectangle("line", x, y, w, h)
     -- crosshair
@@ -20,8 +20,8 @@ function _Node:draw(active, x, y, w, h)
     love.graphics.rectangle("fill", x+w/2-lineWidth/2, y, lineWidth, h)
 
     -- name
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.printf(self.name, x, y-15, w, "center")
+    love.graphics.setColor(COLORS.text)
+    love.graphics.printf(self.name, x, y-17, w, "center")
 
     -- value marker
     if active then

@@ -3,7 +3,7 @@ local Derivative = require "class.Derivative"
 local Level = require "class.Level"
 local game = gamestate.new()
 
-local derivativeCount = 3
+local derivativeCount = 6
 
 function game:enter()
     self.nodes = {}
@@ -30,15 +30,26 @@ function game:update(dt)
 end
 
 function game:draw()
-    self.level:draw()
-
+    -- Derivates
     love.graphics.push()
     local totalWidth = (#self.nodes)*110-10
-    love.graphics.translate((800-totalWidth)/2, 15)
+    love.graphics.translate(50, 20)
 
+    love.graphics.setFont(FONTS.derivatives)
     for i = 1, #self.nodes do
-        self.nodes[i]:draw(i == #self.nodes, (i-1)*110, 0, 100, 100)
+        self.nodes[i]:draw(i == #self.nodes, 0, (i-1)*118, DERIVATIVESIZE, DERIVATIVESIZE)
     end
+
+    love.graphics.pop()
+
+    -- Level
+    love.graphics.push()
+    love.graphics.translate(200, 20)
+
+    self.level:draw()
+    love.graphics.setColor(COLORS.text)
+    love.graphics.setFont(FONTS.figure)
+    love.graphics.printf("Fig. 1: Position", 0, 18*TILESIZE, 18*TILESIZE, "left")
 
     love.graphics.pop()
 end
