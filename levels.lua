@@ -2,7 +2,7 @@ LEVELS = {
     {
         derivatives=0,
         title="Position (geometry)",
-        excerpt="In geometry, a **position** or **position vector**, also known as **location vector** or **radius vector**, is a Euclidean vector that represents the position of a point *P* in space in relation to an arbitrary reference origin *O*."
+        excerpt="In geometry, a **position** or **position** **vector**, also known as **location** **vector** or **radius** **vector**, is a Euclidean vector that represents the position of a point *P* in space in relation to an arbitrary reference origin *O*."
     },
     {
         derivatives=1,
