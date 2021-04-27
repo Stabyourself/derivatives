@@ -3,26 +3,24 @@ local bump = require "lib.bump"
 local Input = require "class.Input"
 local Derivative = require "class.Derivative"
 local Level = require "class.Level"
-local game = gamestate.new()
+local game = {}
 
-local derivativeCount = 3
-
-function game:enter()
+function game:enter(current, level, map)
     self.nodes = {}
 
-    for i = 1, derivativeCount do
+    for i = 1, level.derivatives do
         if i == 1 then
-            table.insert(self.nodes, 1, Input:new(controls))
+            table.insert(self.nodes, 1, Input:new(CONTROLS))
         else
             table.insert(self.nodes, 1, Derivative:new(self.nodes[1]))
         end
 
-        self.nodes[1].name = TERMS[derivativeCount-i+1]
+        self.nodes[1].name = TERMS[level.derivatives-i+1]
     end
 
     self.world = bump.newWorld(TILESIZE*2)
 
-    self.level = Level:new(self, MAP)
+    self.level = Level:new(self, map)
 
     self.player = Player:new(self, self.nodes[1], #self.level.map[1]/2*TILESIZE-TILESIZE*.5, #self.level.map/2*TILESIZE-TILESIZE*.5)
 end

@@ -1,4 +1,4 @@
-local Tile = class("Tile")
+local Tile = CLASS("Tile")
 
 function Tile:initialize(x, y, w, h)
     self.x = x

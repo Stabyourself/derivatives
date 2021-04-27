@@ -1,6 +1,6 @@
 local _Node = require "class._Node"
 
-local Derivative = class("Derivative", _Node)
+local Derivative = CLASS("Derivative", _Node)
 
 function Derivative:initialize(input)
     self.x = 0

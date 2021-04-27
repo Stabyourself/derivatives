@@ -1,9 +1,10 @@
-class = require "lib.middleclass"
-gamestate = require "lib.gamestate"
+CLASS = require "lib.middleclass"
+GAMESTATE = require "lib.gamestate"
 require "variables"
+require "levels"
 
 local baton = require "lib.baton"
-controls = baton.new(require "controls")
+CONTROLS = baton.new(require "controls")
 
 local game = require "game"
 
@@ -12,8 +13,8 @@ background:setWrap("repeat")
 local backgroundQuad = love.graphics.newQuad(0, 0, 1280, 720, 200, 200)
 
 function love.load()
-    gamestate.registerEvents()
-    gamestate.switch(game)
+    GAMESTATE.registerEvents()
+    GAMESTATE.switch(game, LEVELS[3], MAPS[1])
 
     love.graphics.setBackgroundColor(COLORS.background)
 end
@@ -24,7 +25,7 @@ function love.draw()
 end
 
 function love.update(dt)
-    controls:update()
+    CONTROLS:update()
 end
 
 function love.keypressed(key)

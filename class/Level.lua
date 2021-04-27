@@ -1,5 +1,5 @@
-local Level = class("Level")
-local Tile = require "class.Tile"
+local Level = CLASS("Level")
+local Tile = require "CLASS.Tile"
 
 function Level:initialize(game, mapStrings)
     self.game = game

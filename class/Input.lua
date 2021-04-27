@@ -1,6 +1,6 @@
 local _Node = require "class._Node"
 
-local Input = class("Input", _Node)
+local Input = CLASS("Input", _Node)
 
 Input.name = "Input"
 

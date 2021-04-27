@@ -1,4 +1,4 @@
-local _Node = class("_Node")
+local _Node = CLASS("_Node")
 
 local lineWidth = 1
 local circleRadius = 5

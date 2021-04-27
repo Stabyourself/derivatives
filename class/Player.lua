@@ -1,4 +1,4 @@
-local Player = class("Player")
+local Player = CLASS("Player")
 
 Player.w = TILESIZE
 Player.h = TILESIZE
@@ -23,7 +23,7 @@ function Player:update(dt)
         goalX = self.x + x*dt*self.speed
         goalY = self.y + y*dt*self.speed
     else
-        local x, y = controls:get("movement")
+        local x, y = CONTROLS:get("movement")
 
         goalX = x*(TILESIZE*16-self.w)*.5 + TILESIZE*9-self.w*.5
         goalY = y*(TILESIZE*16-self.h)*.5 + TILESIZE*9-self.h*.5
