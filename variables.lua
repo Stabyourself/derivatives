@@ -13,11 +13,11 @@ TILESIZE = 36
 FONTS = {
     derivatives = love.graphics.newFont("font/LinLibertine_RB.ttf", 14),
     figure = love.graphics.newFont("font/LinLibertine_RBI.ttf", 32),
-    title = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 50),
-    excerpt = love.graphics.newFont("font/LinLibertine_DR.ttf", 24),
-    excerptBold = love.graphics.newFont("font/LinLibertine_RB.ttf", 24),
-    excerptItalic = love.graphics.newFont("font/LinLibertine_RZI.ttf", 24),
-    fromWikipedia = love.graphics.newFont("font/LinLibertine_R.ttf", 14),
+    title = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 70),
+    excerpt = love.graphics.newFont("font/LinLibertine_DR.ttf", 32),
+    excerptBold = love.graphics.newFont("font/LinLibertine_RB.ttf", 32),
+    excerptItalic = love.graphics.newFont("font/LinLibertine_RZI.ttf", 32),
+    fromWikipedia = love.graphics.newFont("font/LinLibertine_R.ttf", 16),
 }
 
 local red = {0.70000, 0.20000, 0.20000, 1}
@@ -41,6 +41,7 @@ COLORS = {
     text = black,
     headlineLine = gray,
     fromWikipedia = darkGray,
+    prompt = darkGray,
 
     tiles = black,
     player = red,

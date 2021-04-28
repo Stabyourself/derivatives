@@ -1,11 +1,16 @@
+require "run"
 CLASS = require "lib.middleclass"
-GAMESTATE = require "lib.gamestate"
+if love.filesystem.getInfo("environment.lua") then
+    require "environment"
+end
 require "variables"
 require "levels"
 
 local baton = require "lib.baton"
 CONTROLS = baton.new(require "controls")
+local timer = require "lib.timer"
 
+GAMESTATE = require "lib.gamestate"
 local game = require "game"
 local menu = require "menu"
 
@@ -28,6 +33,7 @@ end
 
 function love.update(dt)
     CONTROLS:update()
+    timer.update(dt)
 end
 
 function love.keypressed(key)

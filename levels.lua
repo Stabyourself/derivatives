@@ -7,12 +7,12 @@ LEVELS = {
     {
         derivatives=1,
         title="Velocity",
-        excerpt="The **velocity** of an object is the rate of change of its position with respect to a frame of reference, and is a function of time. Velocity is equivalent to a specification of an object's speed and direction of motion (e.g. 60 km/h to the north)."
+        excerpt="The **velocity** of an object is the rate of change of its position with respect to a frame of reference, and is a function of time. \n Velocity is equivalent to a specification of an object's speed and direction of motion (e.g. 60 km/h to the north)."
     },
     {
         derivatives=2,
         title="Acceleration",
-        excerpt="In mechanics, **acceleration** is the rate of change of the velocity of an object with respect to time. Accelerations are vector quantities (in that they have magnitude and direction).[1][2] The orientation of an object's acceleration is given by the orientation of the *net* force acting on that object."
+        excerpt="In mechanics, **acceleration** is the rate of change of the velocity of an object with respect to time. Accelerations are vector quantities (in that they have magnitude and direction). \n The orientation of an object's acceleration is given by the orientation of the *net* force acting on that object."
     },
     {
         derivatives=3,
@@ -22,7 +22,7 @@ LEVELS = {
     {
         derivatives=4,
         title="Fourth derivative (snap/jounce)",
-        excerpt="**Snap**, or **jounce**, is the fourth derivative of the position vector with respect to time, or the rate of change of the jerk with respect to time. Equivalently, it is the second derivative of acceleration or the third derivative of velocity, and is defined by any of the following equivalent expressions:"
+        excerpt="**Snap**, or **jounce**, is the fourth derivative of the position vector with respect to time, or the rate of change of the jerk with respect to time. \n Equivalently, it is the second derivative of acceleration or the third derivative of velocity."
     },
     {
         derivatives=5,
