@@ -18,11 +18,6 @@ function Token:initialize(s, fonts)
         self.font = fonts.regular
     end
 
-    -- append space unless it's a \n
-    if not string.find(self.s, "\n") then
-        self.s = self.s .. " "
-    end
-
     self.s = self.s:gsub('[*]', '')
 
     self.w = self.font:getWidth(self.s)
@@ -46,22 +41,16 @@ local Definition = CLASS("Definition")
 
 Definition.from = "From Wikipedia, the free encyclopedia"
 
-Definition.fonts = {
-    title = FONTS.title,
-    fromWikipedia = FONTS.fromWikipedia,
-    regular = FONTS.excerpt,
-    bold = FONTS.excerptBold,
-    italic = FONTS.excerptItalic,
-}
-
-local titleFontHeight = Definition.fonts.title:getHeight()
-local excerptFontHeight = Definition.fonts.regular:getHeight()
-
 local charTime = 1/21.9
 
-function Definition:initialize(title, excerpt)
+function Definition:initialize(title, excerpt, fonts, speedMul)
     self.title = title
     self.excerpt = excerpt
+    self.fonts = fonts
+    self.speedMul = speedMul or 1
+
+    self.titleFontHeight = self.fonts.title:getHeight()
+    self.excerptFontHeight = self.fonts.regular:getHeight()
 
     self.charTimer = 0
     self.word = 1
@@ -71,18 +60,20 @@ function Definition:initialize(title, excerpt)
     self.fromWikipediaA = 0
     self.lineWidth = 0
 
+    self.spaceWidth = self.fonts.regular:getWidth(" ")
+
     self:tokenize()
 
     self.flowController = FlowController3()
 
     self.flowController:addCall(function()
-        timer.tween(1, self, {titleA = 1}, 'linear')
+        timer.tween(1/self.speedMul, self, {titleA = 1}, 'linear')
     end)
 
     self.flowController:addWait(2.8)
     self.flowController:addCall(function()
-        timer.tween(2.9, self, {lineWidth = 1}, 'out-quad')
-        timer.tween(1, self, {fromWikipediaA = 1}, 'linear')
+        timer.tween(2.9/self.speedMul, self, {lineWidth = 1}, 'out-quad')
+        timer.tween(1/self.speedMul, self, {fromWikipediaA = 1}, 'linear')
     end)
 
     self.flowController:addWait(3.3)
@@ -100,6 +91,8 @@ function Definition:tokenize()
 end
 
 function Definition:update(dt)
+    dt = dt * self.speedMul
+
     self.flowController:update(dt)
 
     if self.excerptGoing and self.word <= #self.tokens then
@@ -111,7 +104,7 @@ function Definition:update(dt)
             if token.chars < #token.s then
                 local char = token:setChars(token.chars + 1)
 
-                if char == "," then
+                if char == "," or char == ";" then
                     self.charTimer = self.charTimer - 0.3 -- wait on commas
                 elseif char == "." then
                     self.charTimer = self.charTimer - 0.5 -- wait more on periods
@@ -131,23 +124,24 @@ function Definition:draw(x, y, limit)
     love.graphics.push()
     love.graphics.translate(x, y)
 
+    -- underline
+    love.graphics.setColor(COLORS.headlineLine)
+    love.graphics.rectangle("fill", 0, self.titleFontHeight*0.95, limit*self.lineWidth, 2)
+
+    -- title
     love.graphics.setFont(self.fonts.title)
     local r, g, b = unpack(COLORS.text)
     love.graphics.setColor(r, g, b, self.titleA)
-
     love.graphics.print(self.title, 0, 0)
 
-    love.graphics.setColor(COLORS.headlineLine)
-    love.graphics.rectangle("fill", 0, titleFontHeight*0.95, limit*self.lineWidth, 1)
-
-    love.graphics.translate(0, titleFontHeight*0.97)
+    love.graphics.translate(0, self.titleFontHeight*0.97)
 
     local r, g, b = unpack(COLORS.fromWikipedia)
     love.graphics.setColor(r, g, b, self.fromWikipediaA)
     love.graphics.setFont(self.fonts.fromWikipedia)
     love.graphics.print(self.from, 0, 0)
 
-    love.graphics.translate(0, titleFontHeight*.6)
+    love.graphics.translate(0, self.titleFontHeight*.6)
     love.graphics.setColor(COLORS.text)
 
     local cursorX = 0
@@ -156,15 +150,15 @@ function Definition:draw(x, y, limit)
     for _, token in ipairs(self.tokens) do
         if string.find(token.s, "\n") then
             cursorX = 0
-            cursorY = cursorY + excerptFontHeight*1.7
+            cursorY = cursorY + self.excerptFontHeight*1.7
         else
             if cursorX + token.w > limit then
                 cursorX = 0
-                cursorY = cursorY + excerptFontHeight*1.2
+                cursorY = cursorY + self.excerptFontHeight*1.2
             end
 
             token:print(cursorX, cursorY)
-            cursorX = cursorX + token.w
+            cursorX = cursorX + token.w + self.spaceWidth
         end
     end
 

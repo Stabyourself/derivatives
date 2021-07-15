@@ -36,7 +36,7 @@ function _Node:draw(active, x, y, w, h)
         love.graphics.setColor(COLORS.derivativeInActive)
     end
 
-    love.graphics.circle("fill", x+w/2 + mx*w/2, y+h/2 + my*h/2, circleRadius)
+    love.graphics.circle("fill", x+w/2 + mx*w/2 -.5, y+h/2 + my*h/2 -.5, circleRadius)
 end
 
 return _Node

@@ -39,6 +39,7 @@ function love.run()
 			love.graphics.clear(love.graphics.getBackgroundColor())
 
 			if love.draw then love.draw() end
+			love.postDraw()
 
 			love.graphics.present()
 		end

@@ -13,14 +13,27 @@ TILESIZE = 36
 FONTS = {
     derivatives = love.graphics.newFont("font/LinLibertine_RB.ttf", 14),
     figure = love.graphics.newFont("font/LinLibertine_RBI.ttf", 32),
-    title = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 70),
-    excerpt = love.graphics.newFont("font/LinLibertine_DR.ttf", 32),
-    excerptBold = love.graphics.newFont("font/LinLibertine_RB.ttf", 32),
-    excerptItalic = love.graphics.newFont("font/LinLibertine_RZI.ttf", 32),
-    fromWikipedia = love.graphics.newFont("font/LinLibertine_R.ttf", 16),
+
+    big = {
+        title = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 70),
+        regular = love.graphics.newFont("font/LinLibertine_DR.ttf", 32),
+        bold = love.graphics.newFont("font/LinLibertine_RB.ttf", 32),
+        italic = love.graphics.newFont("font/LinLibertine_RZI.ttf", 32),
+        fromWikipedia = love.graphics.newFont("font/LinLibertine_R.ttf", 16),
+    },
+
+    smol = {
+        title = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 35),
+        regular = love.graphics.newFont("font/LinLibertine_DR.ttf", 20),
+        bold = love.graphics.newFont("font/LinLibertine_RB.ttf", 20),
+        italic = love.graphics.newFont("font/LinLibertine_RZI.ttf", 20),
+        fromWikipedia = love.graphics.newFont("font/LinLibertine_R.ttf", 14),
+    }
 }
 
 local red = {0.70000, 0.20000, 0.20000, 1}
+local green = {0.20000, 0.70000, 0.20000, 1}
+local blue = {0.20000, 0.20000, 0.70000, 1}
 local black = {0.12549, 0.12941, 0.13333, 1}
 local lightGray = {0.78431, 0.80000, 0.81961, 1}
 local gray = {0.63529, 0.66275, 0.69412, 1}
@@ -45,4 +58,5 @@ COLORS = {
 
     tiles = black,
     player = red,
+    collectables = blue,
 }

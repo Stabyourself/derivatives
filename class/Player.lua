@@ -1,9 +1,18 @@
 local Player = CLASS("Player")
+local Collectable = require "class.Collectable"
 
 Player.w = TILESIZE
 Player.h = TILESIZE
 
 Player.speed = 250
+
+function Player:filter(other)
+    if other:isInstanceOf(Collectable) then
+        return "cross"
+    end
+
+    return "slide"
+end
 
 function Player:initialize(game, input, x, y)
     self.game = game
@@ -29,7 +38,13 @@ function Player:update(dt)
         goalY = y*(TILESIZE*16-self.h)*.5 + TILESIZE*9-self.h*.5
     end
 
-    local actualX, actualY, cols, len = self.game.world:move(self, goalX, goalY)
+    local actualX, actualY, cols = self.game.world:move(self, goalX, goalY, self.filter)
+
+    for _, col in ipairs(cols) do
+        if col.other:isInstanceOf(Collectable) then
+            self.game:collectThing(col.other)
+        end
+    end
 
     self.x = actualX
     self.y = actualY
