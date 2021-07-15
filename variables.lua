@@ -13,6 +13,8 @@ TILESIZE = 36
 FONTS = {
     derivatives = love.graphics.newFont("font/LinLibertine_RB.ttf", 14),
     figure = love.graphics.newFont("font/LinLibertine_RBI.ttf", 32),
+    timerTitle = love.graphics.newFont("font/LinLibertine_DR.ttf", 32),
+    timer = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 70),
 
     big = {
         title = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 70),

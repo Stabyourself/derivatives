@@ -6,3 +6,14 @@ function UPDATEGROUP(group, dt)
 		end
 	end
 end
+
+function DRAWTIMER(time, x, y)
+	love.graphics.setFont(FONTS.timer)
+
+	-- local hours = math.floor(time/3600)
+	local minutes = math.floor(time/60)
+	local seconds = math.floor(time%60)
+	local milliseconds = math.floor(time%1*1000)
+
+	love.graphics.print(string.format("%02d:%02d.%03d", minutes, seconds, milliseconds), x, y)
+end

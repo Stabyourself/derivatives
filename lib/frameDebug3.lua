@@ -10,7 +10,7 @@ local advanceFrame = false
 local ffKeys = {
     {
         key = "+",
-        val = 3
+        val = 10
     },
 
     {

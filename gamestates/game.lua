@@ -41,6 +41,8 @@ function game:enter(current, level, map)
     self.definition = Definition:new(level.title, level.excerpt, FONTS.smol, 2)
 
     self.finalBossSpawned = false
+    self.time = 0
+    self.moved = false
 end
 
 function game:update(dt)
@@ -51,13 +53,18 @@ function game:update(dt)
     self.definition:update(dt)
     self.player:update(dt)
     UPDATEGROUP(self.collectables, dt)
+
+    if #self.collectables > 0 then
+        self.time = self.time + dt
+    end
 end
 
 function game:draw()
-    -- Derivates
+    -- left side
     love.graphics.push()
     love.graphics.translate(40, 20)
 
+    -- Derivates
     love.graphics.setFont(FONTS.derivatives)
     for i = 1, #self.nodes do
         self.nodes[i]:draw(i == #self.nodes, 0, (i-1)*118, DERIVATIVESIZE, DERIVATIVESIZE)
@@ -65,10 +72,13 @@ function game:draw()
 
     love.graphics.pop()
 
-    -- Level
+
+
+    -- center
     love.graphics.push()
     love.graphics.translate(40*2 + DERIVATIVESIZE, 20)
 
+    -- Level
     love.graphics.setColor(COLORS.tiles)
     self.level:draw()
 
@@ -89,9 +99,25 @@ function game:draw()
 
     love.graphics.pop()
 
-    -- Definition
+
+    -- right side
+    love.graphics.push()
     local x = 40*2 + DERIVATIVESIZE + 18*TILESIZE+30
-    self.definition:draw(x, 200, 1280-x-30)
+    love.graphics.translate(x, 0)
+
+    -- timer
+    love.graphics.setFont(FONTS.timerTitle)
+    love.graphics.print("Current:", 0, 14)
+    DRAWTIMER(self.time, 0, 34)
+
+    love.graphics.setFont(FONTS.timerTitle)
+    love.graphics.print("Total:", 0, 110)
+    DRAWTIMER(gamestateController.totalTime, 0, 130)
+
+    -- Definition
+    self.definition:draw(0, 220, 1280-x-30)
+
+    love.graphics.pop()
 end
 
 function game:collectThing(collectable)
@@ -107,6 +133,7 @@ function game:collectThing(collectable)
 
             self.finalBossSpawned = true
         else
+            gamestateController:addTime(self.time)
             gamestateController:nextLevel()
         end
     end

@@ -98,7 +98,7 @@ function Definition:update(dt)
     if self.excerptGoing and self.word <= #self.tokens then
         self.charTimer = self.charTimer + dt
 
-        while self.charTimer >= charTime do
+        while self.charTimer >= charTime and self.word <= #self.tokens do
             local token = self.tokens[self.word]
 
             if token.chars < #token.s then
