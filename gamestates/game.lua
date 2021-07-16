@@ -43,6 +43,7 @@ function game:enter(current, level, map)
     self.finalBossSpawned = false
     self.time = 0
     self.moved = false
+    self.finished = false
 end
 
 function game:update(dt)
@@ -54,7 +55,11 @@ function game:update(dt)
     self.player:update(dt)
     UPDATEGROUP(self.collectables, dt)
 
-    if #self.collectables > 0 then
+    if self.player.moving then
+        self.moved = true
+    end
+
+    if self.moved and not self.finished then
         self.time = self.time + dt
     end
 end
@@ -112,7 +117,13 @@ function game:draw()
 
     love.graphics.setFont(FONTS.timerTitle)
     love.graphics.print("Total:", 0, 110)
-    DRAWTIMER(gamestateController.totalTime, 0, 130)
+    local totalTime = gamestateController.totalTime
+
+    if not self.finished then
+        totalTime = totalTime + self.time
+    end
+
+    DRAWTIMER(totalTime, 0, 130)
 
     -- Definition
     self.definition:draw(0, 220, 1280-x-30)
@@ -133,7 +144,8 @@ function game:collectThing(collectable)
 
             self.finalBossSpawned = true
         else
-            gamestateController:addTime(self.time)
+            self.finished = true
+            gamestateController:addTime(math.floor(self.time*1000)/1000)
             gamestateController:nextLevel()
         end
     end
