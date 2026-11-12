@@ -6,6 +6,8 @@ local Definition = require "class.Definition"
 local Derivative = require "class.Derivative"
 local gamestateController = require "gamestateController"
 local Level = require "class.Level"
+local FlowController3 = require "lib.FlowController3"
+local timer = require "lib.timer"
 local game = {}
 
 function game:enter(current, level, map)
@@ -72,29 +74,29 @@ function game:draw()
     -- Derivates
     love.graphics.setFont(FONTS.derivatives)
     for i = 1, #self.nodes do
-        self.nodes[i]:draw(i == #self.nodes, 0, (i-1)*118, DERIVATIVESIZE, DERIVATIVESIZE)
+        self.nodes[i]:draw(i == #self.nodes, 0, (i-1)*118, DERIVATIVESIZE, DERIVATIVESIZE, i+1)
     end
 
     love.graphics.pop()
 
-
+    local a = 1-GAMEFADING.a
 
     -- center
     love.graphics.push()
     love.graphics.translate(40*2 + DERIVATIVESIZE, 20)
 
     -- Level
-    love.graphics.setColor(COLORS.tiles)
+    love.graphics.setColor(COLORS.tiles[1], COLORS.tiles[2], COLORS.tiles[3], a)
     self.level:draw()
 
     -- Collectables
-    love.graphics.setColor(COLORS.collectables)
+    love.graphics.setColor(COLORS.collectables[1], COLORS.collectables[2], COLORS.collectables[3], a)
     for _, collectable in ipairs(self.collectables) do
         collectable:draw()
     end
 
     -- Player
-    love.graphics.setColor(COLORS.player)
+    love.graphics.setColor(COLORS.player[1], COLORS.player[2], COLORS.player[3], a)
     self.player:draw()
 
     -- Heading
@@ -112,10 +114,12 @@ function game:draw()
 
     -- timer
     love.graphics.setFont(FONTS.timerTitle)
+    love.graphics.setColor(COLORS.timerTitle)
     love.graphics.print("Current:", 0, 14)
     DRAWTIMER(self.time, 0, 34)
 
     love.graphics.setFont(FONTS.timerTitle)
+    love.graphics.setColor(COLORS.timerTitle)
     love.graphics.print("Total:", 0, 110)
     local totalTime = gamestateController.totalTime
 
@@ -126,7 +130,7 @@ function game:draw()
     DRAWTIMER(totalTime, 0, 130)
 
     -- Definition
-    self.definition:draw(0, 220, 1280-x-30)
+    self.definition:draw(0, 220, 1280-x-30, a)
 
     love.graphics.pop()
 end
@@ -144,11 +148,28 @@ function game:collectThing(collectable)
 
             self.finalBossSpawned = true
         else
-            self.finished = true
-            gamestateController:addTime(math.floor(self.time*1000)/1000)
-            gamestateController:nextLevel()
+            self:endLevel()
         end
     end
+end
+
+function game:endLevel()
+    self.finished = true
+    gamestateController:addTime(math.floor(self.time*1000)/1000)
+
+    local flowController = FlowController3:new()
+    table.insert(FLOWCONTROLLERS, flowController)
+
+    flowController:addWait(1)
+    flowController:addCall(function()
+        timer.tween(1, GAMEFADING, {a = 1}, "linear")
+    end)
+
+    flowController:addWait(1)
+
+    flowController:addCall(function()
+        gamestateController:nextLevel()
+    end)
 end
 
 return game

@@ -9,6 +9,7 @@ end
 
 function DRAWTIMER(time, x, y)
 	love.graphics.setFont(FONTS.timer)
+	love.graphics.setColor(COLORS.timer)
 
 	-- local hours = math.floor(time/3600)
 	local minutes = math.floor(time/60)

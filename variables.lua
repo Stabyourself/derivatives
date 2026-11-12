@@ -61,4 +61,7 @@ COLORS = {
     tiles = black,
     player = red,
     collectables = blue,
+
+    timerTitle = darkGray,
+    timer = black,
 }

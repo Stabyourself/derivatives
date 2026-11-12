@@ -120,29 +120,29 @@ function Definition:update(dt)
     end
 end
 
-function Definition:draw(x, y, limit)
+function Definition:draw(x, y, limit, a)
     love.graphics.push()
     love.graphics.translate(x, y)
 
     -- underline
-    love.graphics.setColor(COLORS.headlineLine)
+    love.graphics.setColor(COLORS.headlineLine[1], COLORS.headlineLine[2], COLORS.headlineLine[3], a)
     love.graphics.rectangle("fill", 0, self.titleFontHeight*0.95, limit*self.lineWidth, 2)
 
     -- title
     love.graphics.setFont(self.fonts.title)
     local r, g, b = unpack(COLORS.text)
-    love.graphics.setColor(r, g, b, self.titleA)
+    love.graphics.setColor(r, g, b, self.titleA*a)
     love.graphics.print(self.title, 0, 0)
 
     love.graphics.translate(0, self.titleFontHeight*0.97)
 
     local r, g, b = unpack(COLORS.fromWikipedia)
-    love.graphics.setColor(r, g, b, self.fromWikipediaA)
+    love.graphics.setColor(r, g, b, self.fromWikipediaA*a)
     love.graphics.setFont(self.fonts.fromWikipedia)
     love.graphics.print(self.from, 0, 0)
 
     love.graphics.translate(0, self.titleFontHeight*.6)
-    love.graphics.setColor(COLORS.text)
+    love.graphics.setColor(COLORS.text[1], COLORS.text[2], COLORS.text[3], a)
 
     local cursorX = 0
     local cursorY = 0

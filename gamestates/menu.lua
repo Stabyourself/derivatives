@@ -9,6 +9,7 @@ local menu = {}
 local excerpt = "In mathematics, the **derivative** of a function of a real variable measures the sensitivity to change of the function value (output value) with respect to a change in its argument (input value). \n Derivatives are a fundamental tool of calculus."
 
 local music = love.audio.newSource("sound/menu.ogg", "stream")
+music:setLooping(true)
 
 function menu:init()
 end
@@ -27,7 +28,7 @@ function menu:enter(current)
     flowController:addWait(0.5)
     flowController:addCall(function()
         music:play()
-        self.definition = Definition:new("Derivative", excerpt, FONTS.big)
+        self.definition = Definition:new("Derivatives", excerpt, FONTS.big)
     end)
     flowController:addWait(18.4)
     flowController:addCall(function()
@@ -48,7 +49,7 @@ end
 
 function menu:draw()
     if self.definition then
-        self.definition:draw((1280-950)/2, 120, 950)
+        self.definition:draw((1280-950)/2, 120, 950, 1)
     end
 
     love.graphics.setFont(FONTS.big.regular)
@@ -77,9 +78,8 @@ function menu:attemptStart()
         local flowController = FlowController3:new()
         table.insert(FLOWCONTROLLERS, flowController)
 
-        flowController:addCall(function()
-            timer.tween(0.5, FADING, {a = 1}, 'linear')
-        end)
+        timer.tween(1, FADING, {a = 1}, 'linear')
+        flowController:addWait(1.5)
 
         flowController:addCall(function()
             gamestateController:nextLevel()

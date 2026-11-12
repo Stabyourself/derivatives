@@ -5,7 +5,7 @@ local circleRadius = 5
 
 _Node.name = ""
 
-function _Node:draw(active, x, y, w, h)
+function _Node:draw(active, x, y, w, h, i)
     local mx, my = self:getPosition()
 
     -- background
@@ -27,7 +27,7 @@ function _Node:draw(active, x, y, w, h)
 
     -- name
     love.graphics.setColor(COLORS.text)
-    love.graphics.printf(self.name, x, y-17, w, "center")
+    love.graphics.printf("Fig. " .. i .. ": " .. self.name, x-20, y-17, w+40, "center")
 
     -- value marker
     if active then
