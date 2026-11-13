@@ -10,26 +10,33 @@ TERMS = {
 DERIVATIVESIZE = 90
 TILESIZE = 36
 
+FONTSPECS = {} -- for the sharp web fonts
+local function newFont(file, size)
+    local font = love.graphics.newFont(file, size)
+    FONTSPECS[font] = {file, size}
+    return font
+end
+
 FONTS = {
-    derivatives = love.graphics.newFont("font/LinLibertine_RB.ttf", 14),
-    figure = love.graphics.newFont("font/LinLibertine_RBI.ttf", 32),
-    timerTitle = love.graphics.newFont("font/LinLibertine_DR.ttf", 32),
-    timer = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 70),
+    derivatives = newFont("font/LinLibertine_RB.ttf", 14),
+    figure = newFont("font/LinLibertine_RBI.ttf", 32),
+    timerTitle = newFont("font/LinLibertine_DR.ttf", 32),
+    timer = newFont("font/LinLibertine_aDRS.ttf", 70),
 
     big = {
-        title = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 70),
-        regular = love.graphics.newFont("font/LinLibertine_DR.ttf", 32),
-        bold = love.graphics.newFont("font/LinLibertine_RB.ttf", 32),
-        italic = love.graphics.newFont("font/LinLibertine_RZI.ttf", 32),
-        fromWikipedia = love.graphics.newFont("font/LinLibertine_R.ttf", 16),
+        title = newFont("font/LinLibertine_aDRS.ttf", 70),
+        regular = newFont("font/LinLibertine_DR.ttf", 32),
+        bold = newFont("font/LinLibertine_RB.ttf", 32),
+        italic = newFont("font/LinLibertine_RZI.ttf", 32),
+        fromWikipedia = newFont("font/LinLibertine_R.ttf", 16),
     },
 
     smol = {
-        title = love.graphics.newFont("font/LinLibertine_aDRS.ttf", 35),
-        regular = love.graphics.newFont("font/LinLibertine_DR.ttf", 20),
-        bold = love.graphics.newFont("font/LinLibertine_RB.ttf", 20),
-        italic = love.graphics.newFont("font/LinLibertine_RZI.ttf", 20),
-        fromWikipedia = love.graphics.newFont("font/LinLibertine_R.ttf", 14),
+        title = newFont("font/LinLibertine_aDRS.ttf", 35),
+        regular = newFont("font/LinLibertine_DR.ttf", 20),
+        bold = newFont("font/LinLibertine_RB.ttf", 20),
+        italic = newFont("font/LinLibertine_RZI.ttf", 20),
+        fromWikipedia = newFont("font/LinLibertine_R.ttf", 14),
     }
 }
 

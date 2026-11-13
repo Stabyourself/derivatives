@@ -37,6 +37,9 @@ function love.run()
 		if love.graphics and love.graphics.isActive() then
 			love.graphics.origin()
 			love.graphics.clear(love.graphics.getBackgroundColor())
+			if WEBSCALE then
+				love.graphics.scale(WEBSCALE)
+			end
 
 			if love.draw then love.draw() end
 			love.postDraw()

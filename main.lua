@@ -36,7 +36,37 @@ GAMEFADING = {
 }
 FLOWCONTROLLERS = {}
 
+ISWEB = love.system.getOS() == "Web"
+
+if ISWEB then
+    -- draw at the browser's real resolution, with sharper fonts
+    local sharpFonts = {}
+    local setFont = love.graphics.setFont
+    love.graphics.setFont = function(font)
+        setFont(sharpFonts[font] or font)
+    end
+
+    function fitWindow(w, h)
+        WEBSCALE = math.min(w/1280, h/720)
+        local pixels = WEBSCALE*love.graphics.getDPIScale()
+        love.graphics.setLineWidth(math.max(1, math.floor(pixels+.5))/pixels)
+        for font, spec in pairs(FONTSPECS) do
+            if sharpFonts[font] then
+                sharpFonts[font]:release()
+            end
+            sharpFonts[font] = love.graphics.newFont(spec[1], spec[2], "normal", pixels)
+        end
+    end
+
+    function love.resize(w, h)
+        fitWindow(w, h)
+    end
+end
+
 function love.load()
+    if ISWEB then
+        fitWindow(love.graphics.getDimensions())
+    end
     GAMESTATE.registerEvents()
     GAMESTATE.switch(menu)
     -- gamestateController:nextLevel()
